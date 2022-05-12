@@ -8,6 +8,7 @@ interface ParticipantProps {
   videoOnly?: boolean;
   enableScreenShare?: boolean;
   onClick?: () => void;
+  // isAnon:
   isSelected?: boolean;
   isLocalParticipant?: boolean;
   hideParticipant?: boolean;

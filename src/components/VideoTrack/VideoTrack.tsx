@@ -4,6 +4,7 @@ import { styled } from '@material-ui/core/styles';
 import { Track } from 'twilio-video';
 import useMediaStreamTrack from '../../hooks/useMediaStreamTrack/useMediaStreamTrack';
 import useVideoTrackDimensions from '../../hooks/useVideoTrackDimensions/useVideoTrackDimensions';
+import Canvas from '../CanvasTrack/CanvasTrack';
 
 const Video = styled('video')({
   width: '100%',
@@ -24,6 +25,7 @@ export default function VideoTrack({ track, isLocal, priority }: VideoTrackProps
 
   useEffect(() => {
     const el = ref.current;
+    console.log(`el: ${el}`);
     el.muted = true;
     if (track.setPriority && priority) {
       track.setPriority(priority);
@@ -49,6 +51,14 @@ export default function VideoTrack({ track, isLocal, priority }: VideoTrackProps
     transform: isLocal && isFrontFacing ? 'rotateY(180deg)' : '',
     objectFit: isPortrait || track.name.includes('screen') ? ('contain' as const) : ('cover' as const),
   };
+  const styleCanvas = {
+    position: 'absolute',
+  };
 
-  return <Video ref={ref} style={style} />;
+  return (
+    <>
+      <Canvas />
+      <Video id="video" ref={ref} style={style} />
+    </>
+  );
 }

@@ -25,7 +25,6 @@ export default function VideoTrack({ track, isLocal, priority }: VideoTrackProps
 
   useEffect(() => {
     const el = ref.current;
-    console.log(`el: ${el}`);
     el.muted = true;
     if (track.setPriority && priority) {
       track.setPriority(priority);
@@ -50,9 +49,6 @@ export default function VideoTrack({ track, isLocal, priority }: VideoTrackProps
   const style = {
     transform: isLocal && isFrontFacing ? 'rotateY(180deg)' : '',
     objectFit: isPortrait || track.name.includes('screen') ? ('contain' as const) : ('cover' as const),
-  };
-  const styleCanvas = {
-    position: 'absolute',
   };
 
   return (

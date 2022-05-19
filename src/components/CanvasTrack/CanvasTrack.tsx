@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { styled } from '@material-ui/core/styles';
 import useMediaStreamTrack from '../../hooks/useMediaStreamTrack/useMediaStreamTrack';
 import VideoTrack from '../VideoTrack/VideoTrack';
-import { Track } from 'twilio-video';
+import { AudioTrack, Track } from 'twilio-video';
 import { IVideoTrack } from '../../types';
 
 const Canvas = styled('canvas')({
@@ -16,13 +16,7 @@ interface CanvasProps {
   // priority?: Track.Priority | null;
 }
 
-export default function CanvasTrack(track: CanvasProps) {
-  const [frames, setFrames] = useState(0);
-  const requestRef = useRef();
-  const previousTimeRef = useRef();
-  const videoRef = useRef<HTMLCanvasElement>(null!);
-
-  // const animate = (time: number) => {}
+export default function CanvasTrack({ track }: CanvasProps) {
   // const animate = (time: number) => {
   // if (previousTimeRef.current != undefined) {
   //   const deltaTime = time - previousTimeRef.current;
@@ -46,17 +40,15 @@ export default function CanvasTrack(track: CanvasProps) {
     position: 'absolute' as const,
   };
 
-  // useMediaStreamTrack(VideoTrack)
-
   function computeFrame(ctx1: any, video1: any) {
-    ctx1.drawImage(video1, 0, 0, video1.videoWidth, video1.videoHeight);
+    ctx1.drawImage(video1, 0, 0, video1.videoWidth / 2, video1.videoHeight / 2);
   }
   // @ts-ignore
   function timerCallback(ctx1, video1: any) {
     computeFrame(ctx1, video1);
     setTimeout(() => {
       timerCallback(ctx1, video1);
-    }, 1000);
+    }, 0);
   }
   useEffect(() => {
     const canvas = document.getElementById('canvas') as any;
@@ -77,7 +69,7 @@ export default function CanvasTrack(track: CanvasProps) {
     } else {
       console.error('error drawing to canvas, no context found.');
     }
-  }, []); //
+  }, [track]); //
 
   return <Canvas id="canvas" style={style} />;
 }

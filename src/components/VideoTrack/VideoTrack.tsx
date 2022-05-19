@@ -49,11 +49,12 @@ export default function VideoTrack({ track, isLocal, priority }: VideoTrackProps
   const style = {
     transform: isLocal && isFrontFacing ? 'rotateY(180deg)' : '',
     objectFit: isPortrait || track.name.includes('screen') ? ('contain' as const) : ('cover' as const),
+    position: 'absolute' as const,
   };
 
   return (
     <>
-      <Canvas />
+      <Canvas track={track} />
       <Video id="video" ref={ref} style={style} />
     </>
   );

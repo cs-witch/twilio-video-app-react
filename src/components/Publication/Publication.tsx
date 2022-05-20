@@ -20,11 +20,12 @@ interface PublicationProps {
   videoPriority?: Track.Priority | null;
 }
 
+// this is where we'd invoke the canvas
 export default function Publication({ publication, isLocalParticipant, videoOnly, videoPriority }: PublicationProps) {
   const track = useTrack(publication);
 
+  // if canvas toggle is true,
   if (!track) return null;
-
   switch (track.kind) {
     case 'video':
       return (
